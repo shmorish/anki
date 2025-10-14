@@ -1,35 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import FlashcardComponent from './components/FlashcardComponent';
+import CardNavigation from './components/CardNavigation';
+import flashcardsData from './data/flashcards.json';
+import { FlashcardData } from './types/flashcard';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const data = flashcardsData as FlashcardData;
+  const [currentCardIndex, setCurrentCardIndex] = useState(0);
+
+  const handleNext = () => {
+    if (currentCardIndex < data.cards.length - 1) {
+      setCurrentCardIndex(currentCardIndex + 1);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentCardIndex > 0) {
+      setCurrentCardIndex(currentCardIndex - 1);
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="app">
+      <header className="app-header">
+        <h1>Flashcard Learning</h1>
+        <p>Click on a card to flip it and see the answer</p>
+      </header>
+
+      <main className="app-main">
+        <FlashcardComponent card={data.cards[currentCardIndex]} />
+
+        <CardNavigation
+          currentIndex={currentCardIndex}
+          totalCards={data.cards.length}
+          onPrevious={handlePrevious}
+          onNext={handleNext}
+        />
+      </main>
+    </div>
+  );
 }
 
-export default App
+export default App;

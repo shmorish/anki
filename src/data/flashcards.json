@@ -1,0 +1,34 @@
+{
+  "cards": [
+    {
+      "id": 1,
+      "front": "What is React?",
+      "back": "A JavaScript library for building user interfaces, developed by Facebook.",
+      "category": "Programming"
+    },
+    {
+      "id": 2,
+      "front": "What does useState do?",
+      "back": "A React Hook that lets you add state to functional components.",
+      "category": "React Hooks"
+    },
+    {
+      "id": 3,
+      "front": "What is TypeScript?",
+      "back": "A strongly typed programming language that builds on JavaScript.",
+      "category": "Programming"
+    },
+    {
+      "id": 4,
+      "front": "What is Vite?",
+      "back": "A modern, fast build tool for web projects with instant server start.",
+      "category": "Build Tools"
+    },
+    {
+      "id": 5,
+      "front": "What is JSX?",
+      "back": "A syntax extension for JavaScript that allows writing HTML-like code in React.",
+      "category": "React"
+    }
+  ]
+}
