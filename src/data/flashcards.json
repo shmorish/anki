@@ -29,6 +29,12 @@
       "front": "What is JSX?",
       "back": "A syntax extension for JavaScript that allows writing HTML-like code in React.",
       "category": "React"
+    },
+    {
+      "id": 6,
+      "front": "あsふぁえf",
+      "back": "がうぇがえwg",
+      "category": "あsdふぁ"
     }
   ]
 }
