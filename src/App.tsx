@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import FlashcardComponent from './components/FlashcardComponent';
 import CardNavigation from './components/CardNavigation';
 import AddCardForm from './components/AddCardForm';
 import flashcardsData from './data/flashcards.json';
 import type { Flashcard, FlashcardData } from './types/flashcard';
 import './App.css';
+
+const STORAGE_KEY = 'flashcard-checked-ids';
 
 function App() {
   const initialData = flashcardsData as FlashcardData;
@@ -22,9 +24,24 @@ function App() {
   const [cards, setCards] = useState<Flashcard[]>(() => shuffleCards(initialData.cards));
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [showOnlyChecked, setShowOnlyChecked] = useState(false);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+  // Filter cards based on showOnlyChecked
+  const displayedCards = useMemo(() => {
+    if (!showOnlyChecked) {
+      return cards;
+    }
+    const storedIds = localStorage.getItem(STORAGE_KEY);
+    if (!storedIds) {
+      return [];
+    }
+    const checkedIds: number[] = JSON.parse(storedIds);
+    return cards.filter(card => checkedIds.includes(card.id));
+  }, [cards, showOnlyChecked, refreshTrigger]);
 
   const handleNext = () => {
-    if (currentCardIndex < cards.length - 1) {
+    if (currentCardIndex < displayedCards.length - 1) {
       setCurrentCardIndex(currentCardIndex + 1);
     }
   };
@@ -41,12 +58,28 @@ function App() {
     setCards([...cards, cardWithId]);
   };
 
+  const handleToggleFilter = () => {
+    setShowOnlyChecked(!showOnlyChecked);
+    setCurrentCardIndex(0);
+  };
+
+  const handleCheckboxChange = () => {
+    // Trigger re-render when checkbox state changes
+    setRefreshTrigger(prev => prev + 1);
+  };
+
   return (
     <div className="app">
       <header className="app-header">
         <h1>Network Flashcards</h1>
         <p>Click on a card to flip it and see the answer</p>
         <div className="header-actions">
+          <button
+            onClick={handleToggleFilter}
+            className={`btn-filter ${showOnlyChecked ? 'active' : ''}`}
+          >
+            {showOnlyChecked ? '全ての問題を表示' : 'チェックした問題のみ'}
+          </button>
           <button onClick={() => setShowAddForm(true)} className="btn-add">
             + Add Card
           </button>
@@ -54,20 +87,26 @@ function App() {
       </header>
 
       <main className="app-main">
-        {cards.length > 0 ? (
+        {displayedCards.length > 0 ? (
           <>
-            <FlashcardComponent card={cards[currentCardIndex]} />
+            <FlashcardComponent card={displayedCards[currentCardIndex]} />
 
             <CardNavigation
               currentIndex={currentCardIndex}
-              totalCards={cards.length}
+              totalCards={displayedCards.length}
               onPrevious={handlePrevious}
               onNext={handleNext}
+              currentCardId={displayedCards[currentCardIndex].id}
+              onCheckboxChange={handleCheckboxChange}
             />
           </>
         ) : (
           <div className="no-cards">
-            <p>No flashcards yet. Add your first card to get started!</p>
+            <p>
+              {showOnlyChecked
+                ? 'チェックした問題はまだありません。'
+                : 'No flashcards yet. Add your first card to get started!'}
+            </p>
           </div>
         )}
       </main>
