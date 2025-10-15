@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import './CardNavigation.css'
+import { Button, Checkbox, Flex, HStack, Text, Stack } from '@chakra-ui/react'
 
 interface CardNavigationProps {
   currentIndex: number
@@ -33,8 +33,7 @@ export default function CardNavigation({
     }
   }, [currentCardId])
 
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const checked = e.target.checked
+  const handleCheckboxChange = (checked: boolean) => {
     setIsChecked(checked)
 
     // Update localStorage
@@ -60,37 +59,75 @@ export default function CardNavigation({
   }
 
   return (
-    <div className="card-navigation-wrapper">
-      <div className="card-navigation">
-        <button
-          type="button"
+    <Stack gap={4} mt={8}>
+      <HStack gap={8} justify="center">
+        <Button
           onClick={onPrevious}
           disabled={currentIndex === 0}
-          className="nav-button"
+          colorPalette="purple"
+          size="lg"
+          px={8}
+          boxShadow="md"
+          _hover={{ transform: 'translateY(-2px)', boxShadow: 'lg' }}
+          _active={{ transform: 'translateY(0)' }}
+          _disabled={{
+            opacity: 0.5,
+            cursor: 'not-allowed',
+            _hover: { transform: 'none' },
+          }}
         >
           Previous
-        </button>
+        </Button>
 
-        <div className="card-counter">
+        <Text fontSize="xl" fontWeight="600" color="gray.700" minW="80px" textAlign="center">
           {currentIndex + 1} / {totalCards}
-        </div>
+        </Text>
 
-        <button
-          type="button"
+        <Button
           onClick={onNext}
           disabled={currentIndex === totalCards - 1}
-          className="nav-button"
+          colorPalette="purple"
+          size="lg"
+          px={8}
+          boxShadow="md"
+          _hover={{ transform: 'translateY(-2px)', boxShadow: 'lg' }}
+          _active={{ transform: 'translateY(0)' }}
+          _disabled={{
+            opacity: 0.5,
+            cursor: 'not-allowed',
+            _hover: { transform: 'none' },
+          }}
         >
           Next
-        </button>
-      </div>
+        </Button>
+      </HStack>
 
-      <div className="checkbox-container">
-        <label>
-          <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
-          <span>チェック</span>
+      <Flex justify="center">
+        <label style={{ cursor: 'pointer' }}>
+          <Flex
+            align="center"
+            gap={2}
+            bg="gray.100"
+            px={4}
+            py={2}
+            borderRadius="md"
+            _hover={{ bg: 'gray.200' }}
+          >
+            <input
+              type="checkbox"
+              checked={isChecked}
+              onChange={(e) => handleCheckboxChange(e.target.checked)}
+              style={{
+                width: '20px',
+                height: '20px',
+                cursor: 'pointer',
+                accentColor: 'var(--chakra-colors-purple-500)'
+              }}
+            />
+            <Text fontWeight="500">チェック</Text>
+          </Flex>
         </label>
-      </div>
-    </div>
+      </Flex>
+    </Stack>
   )
 }

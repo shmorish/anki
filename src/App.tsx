@@ -1,10 +1,10 @@
 import { useMemo, useState } from 'react'
+import { Box, Button, Container, Flex, Heading, Text, Stack } from '@chakra-ui/react'
 import AddCardForm from './components/AddCardForm'
 import CardNavigation from './components/CardNavigation'
 import FlashcardComponent from './components/FlashcardComponent'
 import flashcardsData from './data/flashcards.json'
 import type { Flashcard, FlashcardData } from './types/flashcard'
-import './App.css'
 
 const STORAGE_KEY = 'flashcard-checked-ids'
 
@@ -69,53 +69,83 @@ function App() {
   }
 
   return (
-    <div className="app">
-      <header className="app-header">
-        <h1>Network Flashcards</h1>
-        <p>Click on a card to flip it and see the answer</p>
-        <div className="header-actions">
-          <button
-            type="button"
-            onClick={handleToggleFilter}
-            className={`btn-filter ${showOnlyChecked ? 'active' : ''}`}
+    <Container maxW="container.xl" minH="100vh" py={8}>
+      <Stack gap={8} align="stretch">
+        <Box as="header" textAlign="center" py={4}>
+          <Heading
+            size="2xl"
+            bgGradient="to-r"
+            gradientFrom="purple.400"
+            gradientTo="purple.600"
+            backgroundClip="text"
+            mb={3}
           >
-            {showOnlyChecked ? '全ての問題を表示' : 'チェックした問題のみ'}
-          </button>
-          <button type="button" onClick={() => setShowAddForm(true)} className="btn-add">
-            + Add Card
-          </button>
-        </div>
-      </header>
+            Network Flashcards
+          </Heading>
+          <Text color="gray.600" fontSize="lg" mb={4}>
+            Click on a card to flip it and see the answer
+          </Text>
+          <Flex gap={4} justify="center" mt={4}>
+            <Button
+              onClick={handleToggleFilter}
+              colorPalette={showOnlyChecked ? 'cyan' : 'pink'}
+              size="lg"
+              boxShadow="md"
+              _hover={{ transform: 'translateY(-2px)', boxShadow: 'lg' }}
+              _active={{ transform: 'translateY(0)' }}
+            >
+              {showOnlyChecked ? '全ての問題を表示' : 'チェックした問題のみ'}
+            </Button>
+            <Button
+              onClick={() => setShowAddForm(true)}
+              colorPalette="purple"
+              size="lg"
+              boxShadow="md"
+              _hover={{ transform: 'translateY(-2px)', boxShadow: 'lg' }}
+              _active={{ transform: 'translateY(0)' }}
+            >
+              + Add Card
+            </Button>
+          </Flex>
+        </Box>
 
-      <main className="app-main">
-        {displayedCards.length > 0 ? (
-          <>
-            <FlashcardComponent card={displayedCards[currentCardIndex]} />
+        <Flex
+          as="main"
+          flex={1}
+          direction="column"
+          justify="center"
+          align="center"
+          w="full"
+        >
+          {displayedCards.length > 0 ? (
+            <>
+              <FlashcardComponent card={displayedCards[currentCardIndex]} />
 
-            <CardNavigation
-              currentIndex={currentCardIndex}
-              totalCards={displayedCards.length}
-              onPrevious={handlePrevious}
-              onNext={handleNext}
-              currentCardId={displayedCards[currentCardIndex].id}
-              onCheckboxChange={handleCheckboxChange}
-            />
-          </>
-        ) : (
-          <div className="no-cards">
-            <p>
-              {showOnlyChecked
-                ? 'チェックした問題はまだありません。'
-                : 'No flashcards yet. Add your first card to get started!'}
-            </p>
-          </div>
+              <CardNavigation
+                currentIndex={currentCardIndex}
+                totalCards={displayedCards.length}
+                onPrevious={handlePrevious}
+                onNext={handleNext}
+                currentCardId={displayedCards[currentCardIndex].id}
+                onCheckboxChange={handleCheckboxChange}
+              />
+            </>
+          ) : (
+            <Box textAlign="center" py={12}>
+              <Text color="gray.600" fontSize="xl">
+                {showOnlyChecked
+                  ? 'チェックした問題はまだありません。'
+                  : 'No flashcards yet. Add your first card to get started!'}
+              </Text>
+            </Box>
+          )}
+        </Flex>
+
+        {showAddForm && (
+          <AddCardForm onAddCard={handleAddCard} onClose={() => setShowAddForm(false)} />
         )}
-      </main>
-
-      {showAddForm && (
-        <AddCardForm onAddCard={handleAddCard} onClose={() => setShowAddForm(false)} />
-      )}
-    </div>
+      </Stack>
+    </Container>
   )
 }
 

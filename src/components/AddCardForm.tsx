@@ -1,6 +1,16 @@
 import { useId, useState } from 'react'
+import {
+  Box,
+  Button,
+  Flex,
+  Field,
+  Heading,
+  Input,
+  Dialog,
+  Textarea,
+  Stack,
+} from '@chakra-ui/react'
 import type { Flashcard } from '../types/flashcard'
-import './AddCardForm.css'
 
 interface AddCardFormProps {
   onAddCard: (card: Omit<Flashcard, 'id'>) => void
@@ -45,87 +55,91 @@ export default function AddCardForm({ onAddCard, onClose }: AddCardFormProps) {
     }
   }
 
-  const handleOverlayClick = () => {
-    onClose()
-  }
-
-  const handleOverlayKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      onClose()
-    }
-  }
-
-  const handleContentClick = (e: React.MouseEvent) => {
-    e.stopPropagation()
-  }
-
-  const handleContentKeyDown = (e: React.KeyboardEvent) => {
-    e.stopPropagation()
-  }
-
   return (
-    <div
-      className="modal-overlay"
-      onClick={handleOverlayClick}
-      onKeyDown={handleOverlayKeyDown}
-      role="button"
-      tabIndex={-1}
-    >
-      <div
-        className="modal-content"
-        onClick={handleContentClick}
-        onKeyDown={handleContentKeyDown}
-        role="dialog"
-        tabIndex={-1}
-      >
-        <h2>Add New Flashcard</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor={categoryId}>Category</label>
-            <input
-              id={categoryId}
-              type="text"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              placeholder="e.g., Programming, Math, History"
-              required
-            />
-          </div>
+    <Dialog.Root open={true} onOpenChange={(e) => !e.open && onClose()}>
+      <Dialog.Backdrop bg="blackAlpha.500" />
+      <Dialog.Positioner>
+        <Dialog.Content borderRadius="16px" p={8} mx={4} maxW="lg">
+          <Dialog.Body p={0}>
+            <Heading size="lg" mb={6} color="gray.700">
+              Add New Flashcard
+            </Heading>
+            <Box as="form" onSubmit={handleSubmit}>
+              <Stack gap={6} align="stretch">
+                <Field.Root required>
+                  <Field.Label htmlFor={categoryId} color="gray.600" fontWeight="600">
+                    Category
+                  </Field.Label>
+                  <Input
+                    id={categoryId}
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    placeholder="e.g., Programming, Math, History"
+                    size="lg"
+                    borderColor="gray.300"
+                  />
+                </Field.Root>
 
-          <div className="form-group">
-            <label htmlFor={frontId}>Question (Front)</label>
-            <textarea
-              id={frontId}
-              value={front}
-              onChange={(e) => setFront(e.target.value)}
-              placeholder="Enter the question..."
-              rows={3}
-              required
-            />
-          </div>
+                <Field.Root required>
+                  <Field.Label htmlFor={frontId} color="gray.600" fontWeight="600">
+                    Question (Front)
+                  </Field.Label>
+                  <Textarea
+                    id={frontId}
+                    value={front}
+                    onChange={(e) => setFront(e.target.value)}
+                    placeholder="Enter the question..."
+                    rows={3}
+                    size="lg"
+                    borderColor="gray.300"
+                    resize="vertical"
+                  />
+                </Field.Root>
 
-          <div className="form-group">
-            <label htmlFor={backId}>Answer (Back)</label>
-            <textarea
-              id={backId}
-              value={back}
-              onChange={(e) => setBack(e.target.value)}
-              placeholder="Enter the answer..."
-              rows={3}
-              required
-            />
-          </div>
+                <Field.Root required>
+                  <Field.Label htmlFor={backId} color="gray.600" fontWeight="600">
+                    Answer (Back)
+                  </Field.Label>
+                  <Textarea
+                    id={backId}
+                    value={back}
+                    onChange={(e) => setBack(e.target.value)}
+                    placeholder="Enter the answer..."
+                    rows={3}
+                    size="lg"
+                    borderColor="gray.300"
+                    resize="vertical"
+                  />
+                </Field.Root>
 
-          <div className="form-actions">
-            <button type="button" onClick={onClose} className="btn-cancel" disabled={isSubmitting}>
-              Cancel
-            </button>
-            <button type="submit" className="btn-submit" disabled={isSubmitting}>
-              {isSubmitting ? 'Creating Issue...' : 'Add Card'}
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+                <Flex gap={4} justify="flex-end" mt={4}>
+                  <Button
+                    onClick={onClose}
+                    disabled={isSubmitting}
+                    size="lg"
+                    bg="gray.100"
+                    color="gray.600"
+                    _hover={{ bg: 'gray.200' }}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    colorPalette="purple"
+                    size="lg"
+                    boxShadow="md"
+                    _hover={{ transform: 'translateY(-2px)', boxShadow: 'lg' }}
+                    _active={{ transform: 'translateY(0)' }}
+                  >
+                    {isSubmitting ? 'Creating Issue...' : 'Add Card'}
+                  </Button>
+                </Flex>
+              </Stack>
+            </Box>
+          </Dialog.Body>
+        </Dialog.Content>
+      </Dialog.Positioner>
+    </Dialog.Root>
   )
 }
