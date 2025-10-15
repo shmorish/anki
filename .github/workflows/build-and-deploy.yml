@@ -1,13 +1,12 @@
-name: Deploy to GitHub Pages
+name: Build and Deploy
 
 on:
   push:
     branches:
-      - gh-pages
-  workflow_dispatch:
+      - main
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -16,16 +15,26 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  build-and-deploy:
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
-      - name: Checkout gh-pages branch
+      - name: Checkout main branch
         uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          ref: gh-pages
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -33,7 +42,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: './dist'
 
       - name: Deploy to GitHub Pages
         id: deployment
