@@ -1,0 +1,123 @@
+name: Process Flashcard Issue
+
+on:
+  issues:
+    types: [opened, labeled]
+
+permissions:
+  contents: write
+  issues: write
+  pages: write
+  id-token: write
+
+jobs:
+  add-flashcard:
+    if: contains(github.event.issue.labels.*.name, 'flashcard')
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Extract flashcard data from issue
+        id: extract
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const body = issue.body || '';
+
+            // Parse the issue form data
+            const categoryMatch = body.match(/### Category\s*\n\s*(.+)/);
+            const frontMatch = body.match(/### Question \(Front\)\s*\n\s*([\s\S]+?)(?=\n###|\n$)/);
+            const backMatch = body.match(/### Answer \(Back\)\s*\n\s*([\s\S]+?)(?=\n###|\n$)/);
+
+            const category = categoryMatch ? categoryMatch[1].trim() : '';
+            const front = frontMatch ? frontMatch[1].trim() : '';
+            const back = backMatch ? backMatch[1].trim() : '';
+
+            if (!category || !front || !back) {
+              core.setFailed('Failed to extract flashcard data from issue');
+              return;
+            }
+
+            core.setOutput('category', category);
+            core.setOutput('front', front);
+            core.setOutput('back', back);
+
+      - name: Update flashcards.json
+        run: |
+          node << 'EOF'
+          const fs = require('fs');
+          const path = './src/data/flashcards.json';
+
+          const data = JSON.parse(fs.readFileSync(path, 'utf8'));
+          const newId = data.cards.length > 0 ? Math.max(...data.cards.map(c => c.id)) + 1 : 1;
+
+          const newCard = {
+            id: newId,
+            front: process.env.FRONT,
+            back: process.env.BACK,
+            category: process.env.CATEGORY
+          };
+
+          data.cards.push(newCard);
+          fs.writeFileSync(path, JSON.stringify(data, null, 2) + '\n');
+
+          console.log('Added new flashcard:', newCard);
+          EOF
+        env:
+          CATEGORY: ${{ steps.extract.outputs.category }}
+          FRONT: ${{ steps.extract.outputs.front }}
+          BACK: ${{ steps.extract.outputs.back }}
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add src/data/flashcards.json
+          git commit -m "Add flashcard from issue #${{ github.event.issue.number }}"
+          git push
+
+      - name: Close issue with comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: '✅ Flashcard has been added successfully! The changes will be deployed shortly.'
+            });
+
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: 'closed'
+            });
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

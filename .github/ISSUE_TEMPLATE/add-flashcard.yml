@@ -1,0 +1,31 @@
+name: Add Flashcard
+description: Add a new flashcard to the collection
+title: "[CARD] "
+labels: ["flashcard"]
+body:
+  - type: input
+    id: category
+    attributes:
+      label: Category
+      description: The category for this flashcard
+      placeholder: "e.g., Programming, Math, History"
+    validations:
+      required: true
+
+  - type: textarea
+    id: front
+    attributes:
+      label: Question (Front)
+      description: The question or prompt for the flashcard
+      placeholder: "Enter the question..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: back
+    attributes:
+      label: Answer (Back)
+      description: The answer or explanation for the flashcard
+      placeholder: "Enter the answer..."
+    validations:
+      required: true
