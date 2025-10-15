@@ -2,7 +2,7 @@ import { useState } from 'react';
 import FlashcardComponent from './components/FlashcardComponent';
 import CardNavigation from './components/CardNavigation';
 import flashcardsData from './data/flashcards.json';
-import { FlashcardData } from './types/flashcard';
+import type { FlashcardData } from './types/flashcard';
 import './App.css';
 
 function App() {
