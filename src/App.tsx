@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
-import FlashcardComponent from './components/FlashcardComponent'
 import CardNavigation from './components/CardNavigation'
+import FlashcardComponent from './components/FlashcardComponent'
 import AddCardForm from './components/AddCardForm'
 import flashcardsData from './data/flashcards.json'
 import type { Flashcard, FlashcardData } from './types/flashcard'
