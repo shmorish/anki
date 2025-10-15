@@ -1,73 +1,91 @@
-# React + TypeScript + Vite
+# Flashcards
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+学習用フラッシュカードアプリケーション
 
-Currently, two official plugins are available:
+## 概要
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+このアプリケーションは、フラッシュカードシステムです。React + TypeScript + Viteで構築され、GitHub Pagesで公開されています。
 
-## React Compiler
+## 技術スタック
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+- **フレームワーク**: React 19
+- **言語**: TypeScript
+- **ビルドツール**: Vite
+- **スタイリング**: CSS
+- **デプロイ**: GitHub Pages
+- **CI/CD**: GitHub Actions
 
-## Expanding the ESLint configuration
+## セットアップ
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 必要な環境
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Node.js 20.x以上
+- npm
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### インストール
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# リポジトリのクローン
+git clone <repository-url>
+cd anki
+
+# 依存関係のインストール
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 開発
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 開発サーバーの起動
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
+```
+
+ブラウザで http://localhost:5173 を開きます。
+
+
+
+## デプロイ
+
+このプロジェクトはGitHub Actionsで自動デプロイされます。
+
+- `main` ブランチにプッシュすると、自動的にビルド＆デプロイが実行されます
+- GitHub Pagesで公開されます
+
+手動でデプロイする場合：
+
+```bash
+npm run deploy
+```
+
+## フラッシュカードの追加
+
+### アプリ内から追加
+
+1. アプリを開く
+2. "Add Card" ボタンをクリック
+3. フォームに質問、答え、カテゴリーを入力
+4. Issueを作成すると、GitHub Actionsが自動的に `flashcards.json` にカードを追加
+
+## プロジェクト構造
+
+```
+anki/
+├── .github/
+│   └── workflows/          # GitHub Actions ワークフロー
+│       ├── build-and-deploy.yml
+│       └── process-flashcard-issue.yml
+├── src/
+│   ├── components/         # Reactコンポーネント
+│   │   ├── FlashcardComponent.tsx
+│   │   ├── CardNavigation.tsx
+│   │   └── AddCardForm.tsx
+│   ├── data/
+│   │   └── flashcards.json # フラッシュカードデータ
+│   ├── types/
+│   │   └── flashcard.ts    # TypeScript型定義
+│   ├── App.tsx             # メインアプリケーション
+│   └── main.tsx            # エントリーポイント
+├── package.json
+└── vite.config.ts
 ```
