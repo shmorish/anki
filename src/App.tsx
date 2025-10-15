@@ -8,7 +8,18 @@ import './App.css';
 
 function App() {
   const initialData = flashcardsData as FlashcardData;
-  const [cards, setCards] = useState<Flashcard[]>(initialData.cards);
+
+  // Shuffle cards on initial load
+  const shuffleCards = (cardsToShuffle: Flashcard[]) => {
+    const shuffled = [...cardsToShuffle];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
+
+  const [cards, setCards] = useState<Flashcard[]>(() => shuffleCards(initialData.cards));
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [showAddForm, setShowAddForm] = useState(false);
 
@@ -30,32 +41,14 @@ function App() {
     setCards([...cards, cardWithId]);
   };
 
-  const handleExportJSON = () => {
-    const dataToExport = { cards };
-    const blob = new Blob([JSON.stringify(dataToExport, null, 2)], {
-      type: 'application/json'
-    });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'flashcards.json';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  };
-
   return (
     <div className="app">
       <header className="app-header">
-        <h1>Flashcard Learning</h1>
+        <h1>Network Flashcards</h1>
         <p>Click on a card to flip it and see the answer</p>
         <div className="header-actions">
           <button onClick={() => setShowAddForm(true)} className="btn-add">
             + Add Card
-          </button>
-          <button onClick={handleExportJSON} className="btn-export">
-            Export JSON
           </button>
         </div>
       </header>
