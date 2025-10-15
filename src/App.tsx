@@ -1,7 +1,7 @@
-import { useState, useMemo } from 'react'
+import { useMemo, useState } from 'react'
+import AddCardForm from './components/AddCardForm'
 import CardNavigation from './components/CardNavigation'
 import FlashcardComponent from './components/FlashcardComponent'
-import AddCardForm from './components/AddCardForm'
 import flashcardsData from './data/flashcards.json'
 import type { Flashcard, FlashcardData } from './types/flashcard'
 import './App.css'
@@ -25,7 +25,7 @@ function App() {
   const [currentCardIndex, setCurrentCardIndex] = useState(0)
   const [showAddForm, setShowAddForm] = useState(false)
   const [showOnlyChecked, setShowOnlyChecked] = useState(false)
-  const [refreshTrigger, setRefreshTrigger] = useState(0)
+  const [_refreshTrigger, setRefreshTrigger] = useState(0)
 
   // Filter cards based on showOnlyChecked
   const displayedCards = useMemo(() => {
@@ -38,7 +38,7 @@ function App() {
     }
     const checkedIds: number[] = JSON.parse(storedIds)
     return cards.filter((card) => checkedIds.includes(card.id))
-  }, [cards, showOnlyChecked, refreshTrigger])
+  }, [cards, showOnlyChecked])
 
   const handleNext = () => {
     if (currentCardIndex < displayedCards.length - 1) {
@@ -75,12 +75,13 @@ function App() {
         <p>Click on a card to flip it and see the answer</p>
         <div className="header-actions">
           <button
+            type="button"
             onClick={handleToggleFilter}
             className={`btn-filter ${showOnlyChecked ? 'active' : ''}`}
           >
             {showOnlyChecked ? '全ての問題を表示' : 'チェックした問題のみ'}
           </button>
-          <button onClick={() => setShowAddForm(true)} className="btn-add">
+          <button type="button" onClick={() => setShowAddForm(true)} className="btn-add">
             + Add Card
           </button>
         </div>

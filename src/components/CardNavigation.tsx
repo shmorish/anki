@@ -62,7 +62,12 @@ export default function CardNavigation({
   return (
     <div className="card-navigation-wrapper">
       <div className="card-navigation">
-        <button onClick={onPrevious} disabled={currentIndex === 0} className="nav-button">
+        <button
+          type="button"
+          onClick={onPrevious}
+          disabled={currentIndex === 0}
+          className="nav-button"
+        >
           Previous
         </button>
 
@@ -70,7 +75,12 @@ export default function CardNavigation({
           {currentIndex + 1} / {totalCards}
         </div>
 
-        <button onClick={onNext} disabled={currentIndex === totalCards - 1} className="nav-button">
+        <button
+          type="button"
+          onClick={onNext}
+          disabled={currentIndex === totalCards - 1}
+          className="nav-button"
+        >
           Next
         </button>
       </div>

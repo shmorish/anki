@@ -13,8 +13,21 @@ export default function FlashcardComponent({ card }: FlashcardComponentProps) {
     setIsFlipped(!isFlipped)
   }
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      handleFlip()
+    }
+  }
+
   return (
-    <div className="flashcard-container" onClick={handleFlip}>
+    <div
+      className="flashcard-container"
+      onClick={handleFlip}
+      onKeyDown={handleKeyDown}
+      role="button"
+      tabIndex={0}
+    >
       <div className={`flashcard ${isFlipped ? 'flipped' : ''}`}>
         <div className="flashcard-front">
           <div className="category-badge">{card.category}</div>

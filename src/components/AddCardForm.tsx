@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import type { Flashcard } from '../types/flashcard'
 import './AddCardForm.css'
 
@@ -12,6 +12,10 @@ export default function AddCardForm({ onAddCard, onClose }: AddCardFormProps) {
   const [back, setBack] = useState('')
   const [category, setCategory] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const categoryId = useId()
+  const frontId = useId()
+  const backId = useId()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -41,15 +45,45 @@ export default function AddCardForm({ onAddCard, onClose }: AddCardFormProps) {
     }
   }
 
+  const handleOverlayClick = () => {
+    onClose()
+  }
+
+  const handleOverlayKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      onClose()
+    }
+  }
+
+  const handleContentClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
+  }
+
+  const handleContentKeyDown = (e: React.KeyboardEvent) => {
+    e.stopPropagation()
+  }
+
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+    <div
+      className="modal-overlay"
+      onClick={handleOverlayClick}
+      onKeyDown={handleOverlayKeyDown}
+      role="button"
+      tabIndex={-1}
+    >
+      <div
+        className="modal-content"
+        onClick={handleContentClick}
+        onKeyDown={handleContentKeyDown}
+        role="dialog"
+        tabIndex={-1}
+      >
         <h2>Add New Flashcard</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="category">Category</label>
+            <label htmlFor={categoryId}>Category</label>
             <input
-              id="category"
+              id={categoryId}
               type="text"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
@@ -59,9 +93,9 @@ export default function AddCardForm({ onAddCard, onClose }: AddCardFormProps) {
           </div>
 
           <div className="form-group">
-            <label htmlFor="front">Question (Front)</label>
+            <label htmlFor={frontId}>Question (Front)</label>
             <textarea
-              id="front"
+              id={frontId}
               value={front}
               onChange={(e) => setFront(e.target.value)}
               placeholder="Enter the question..."
@@ -71,9 +105,9 @@ export default function AddCardForm({ onAddCard, onClose }: AddCardFormProps) {
           </div>
 
           <div className="form-group">
-            <label htmlFor="back">Answer (Back)</label>
+            <label htmlFor={backId}>Answer (Back)</label>
             <textarea
-              id="back"
+              id={backId}
               value={back}
               onChange={(e) => setBack(e.target.value)}
               placeholder="Enter the answer..."
