@@ -34,17 +34,21 @@ jobs:
             const issue = context.payload.issue;
             const body = issue.body || '';
 
-            // Parse the issue form data
-            const categoryMatch = body.match(/### Category\s*\n\s*(.+)/);
-            const frontMatch = body.match(/### Question \(Front\)\s*\n\s*([\s\S]+?)(?=\n###|\n$)/);
-            const backMatch = body.match(/### Answer \(Back\)\s*\n\s*([\s\S]+?)(?=\n###|\n$)/);
+            console.log('Issue body:', body);
+
+            // Parse the issue form data (account for blank lines)
+            const categoryMatch = body.match(/### Category\s*\n+\s*(.+)/);
+            const frontMatch = body.match(/### Question \(Front\)\s*\n+([\s\S]+?)(?=\n###|$)/);
+            const backMatch = body.match(/### Answer \(Back\)\s*\n+([\s\S]+?)$/);
 
             const category = categoryMatch ? categoryMatch[1].trim() : '';
             const front = frontMatch ? frontMatch[1].trim() : '';
             const back = backMatch ? backMatch[1].trim() : '';
 
+            console.log('Extracted data:', { category, front, back });
+
             if (!category || !front || !back) {
-              core.setFailed('Failed to extract flashcard data from issue');
+              core.setFailed(`Failed to extract flashcard data from issue. Got: category="${category}", front="${front}", back="${back}"`);
               return;
             }
 
