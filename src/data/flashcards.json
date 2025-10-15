@@ -2,39 +2,243 @@
   "cards": [
     {
       "id": 1,
-      "front": "What is React?",
-      "back": "A JavaScript library for building user interfaces, developed by Facebook.",
-      "category": "Programming"
+      "front": "OSIモデルとは何か？階層数は？",
+      "back": "OSI（Open Systems Interconnection）モデルは、ネットワーク通信を標準化する概念的なフレームワークです。7階層：物理層、データリンク層、ネットワーク層、トランスポート層、セッション層、プレゼンテーション層、アプリケーション層。",
+      "category": "ネットワーク基礎"
     },
     {
       "id": 2,
-      "front": "What does useState do?",
-      "back": "A React Hook that lets you add state to functional components.",
-      "category": "React Hooks"
+      "front": "TCPとUDPの違いは？",
+      "back": "TCPはコネクション型で信頼性があり、順序保証とエラーチェックを行います。UDPはコネクションレス型で高速ですが、配送保証や順序保証はありません。",
+      "category": "トランスポート層"
     },
     {
       "id": 3,
-      "front": "What is TypeScript?",
-      "back": "A strongly typed programming language that builds on JavaScript.",
-      "category": "Programming"
+      "front": "サブネットマスクとは？255.255.255.0の意味は？",
+      "back": "サブネットマスクはIPアドレスのネットワーク部とホスト部を分離します。255.255.255.0（/24）は最初の24ビットがネットワーク部で、256アドレス（利用可能254ホスト）を意味します。",
+      "category": "IPアドレッシング"
     },
     {
       "id": 4,
-      "front": "What is Vite?",
-      "back": "A modern, fast build tool for web projects with instant server start.",
-      "category": "Build Tools"
+      "front": "デフォルトゲートウェイとは何か？",
+      "back": "デフォルトゲートウェイは、デバイスがローカルサブネット外のネットワークと通信する際に使用するルーターのIPアドレスです。他のネットワークへトラフィックを転送します。",
+      "category": "ネットワーク基礎"
     },
     {
       "id": 5,
-      "front": "What is JSX?",
-      "back": "A syntax extension for JavaScript that allows writing HTML-like code in React.",
-      "category": "React"
+      "front": "IPアドレスの主要な3つのクラス（A、B、C）は？",
+      "back": "クラスA: 1.0.0.0～126.0.0.0（/8）、クラスB: 128.0.0.0～191.255.0.0（/16）、クラスC: 192.0.0.0～223.255.255.0（/24）。各クラスは異なるネットワーク/ホストビット配分を持ちます。",
+      "category": "IPアドレッシング"
     },
     {
       "id": 6,
-      "front": "あsふぁえf",
-      "back": "がうぇがえwg",
-      "category": "あsdふぁ"
+      "front": "VLANとは何か？なぜ使用されるのか？",
+      "back": "VLAN（Virtual Local Area Network）は、ネットワークを論理的に分離されたブロードキャストドメインにセグメント化します。セキュリティ向上、ブロードキャストトラフィック削減、物理的変更なしで柔軟なネットワーク構成が可能になります。",
+      "category": "スイッチング"
+    },
+    {
+      "id": 7,
+      "front": "スパニングツリープロトコル（STP）の目的は？",
+      "back": "STPはスイッチネットワークでループを防止します。冗長パスをブロックしながらバックアップパスを利用可能に保ちます。スイッチ間で1つのアクティブパスのみを保証します。",
+      "category": "スイッチング"
+    },
+    {
+      "id": 8,
+      "front": "STPにおけるスイッチポートの状態は？",
+      "back": "5つのSTPポート状態：ブロッキング、リスニング、ラーニング、フォワーディング、ディセーブル。ポートはループ防止のためこれらの状態を遷移します。",
+      "category": "スイッチング"
+    },
+    {
+      "id": 9,
+      "front": "スイッチとルーターの違いは？",
+      "back": "スイッチはレイヤー2（データリンク層）で動作し、LAN内でMACアドレスに基づいてトラフィックを転送します。ルーターはレイヤー3（ネットワーク層）で動作し、IPアドレスを使用して異なるネットワーク間でトラフィックをルーティングします。",
+      "category": "ネットワーク機器"
+    },
+    {
+      "id": 10,
+      "front": "NAT（Network Address Translation）とは？",
+      "back": "NATはプライベートIPアドレスをパブリックIPアドレスに変換し、複数のデバイスが1つのパブリックIPを共有できるようにします。主な種類：スタティックNAT、ダイナミックNAT、PAT（ポートアドレス変換/NATオーバーロード）。",
+      "category": "ルーティング"
+    },
+    {
+      "id": 11,
+      "front": "DHCPとは？DHCPプロセスの4つのステップは？",
+      "back": "DHCP（Dynamic Host Configuration Protocol）は自動的にIPアドレスを割り当てます。4つのステップ：DISCOVER、OFFER、REQUEST、ACKNOWLEDGE（DORA）。",
+      "category": "ネットワークサービス"
+    },
+    {
+      "id": 12,
+      "front": "DNSとは？使用するポートは？",
+      "back": "DNS（Domain Name System）はドメイン名をIPアドレスに変換します。ポート53をTCPとUDPの両方で使用（クエリはUDP、ゾーン転送はTCP）。",
+      "category": "ネットワークサービス"
+    },
+    {
+      "id": 13,
+      "front": "ハブ、スイッチ、ルーターの違いは？",
+      "back": "ハブ：レイヤー1、全ポートにブロードキャスト。スイッチ：レイヤー2、MACアドレスに基づいて転送。ルーター：レイヤー3、IPアドレスを使用してネットワーク間をルーティング。",
+      "category": "ネットワーク機器"
+    },
+    {
+      "id": 14,
+      "front": "アドミニストレーティブディスタンス（AD）とは？一般的な値は？",
+      "back": "ADはルーティングプロトコルの信頼性を測定します。一般的な値：直接接続（0）、スタティック（1）、EIGRP（90）、OSPF（110）、RIP（120）。低いADが優先されます。",
+      "category": "ルーティング"
+    },
+    {
+      "id": 15,
+      "front": "OSPFとは？どのタイプのプロトコルか？",
+      "back": "OSPF（Open Shortest Path First）はリンクステート型ルーティングプロトコルで、ダイクストラアルゴリズムを使用して最短パスを見つけます。高速なコンバージェンスと大規模ネットワークへのスケーラビリティが特徴です。",
+      "category": "ルーティングプロトコル"
+    },
+    {
+      "id": 16,
+      "front": "RIPとは？最大ホップカウントは？",
+      "back": "RIP（Routing Information Protocol）はディスタンスベクター型ルーティングプロトコルです。最大ホップカウントは15（16は到達不能）。RIPv2はVLSMと認証をサポートします。",
+      "category": "ルーティングプロトコル"
+    },
+    {
+      "id": 17,
+      "front": "EIGRPとは？",
+      "back": "EIGRP（Enhanced Interior Gateway Routing Protocol）はCisco独自の高度なディスタンスベクタープロトコルです。DUALアルゴリズムを使用した高速なコンバージェンスと、不均等コストロードバランシングをサポートします。",
+      "category": "ルーティングプロトコル"
+    },
+    {
+      "id": 18,
+      "front": "スタティックルーティングとダイナミックルーティングの違いは？",
+      "back": "スタティックルーティング：手動設定、予測可能、オーバーヘッドなしだがスケーラブルでない。ダイナミックルーティング：プロトコル（RIP、OSPF、EIGRP）を使用して自動的にルートを学習、トポロジ変更に適応。",
+      "category": "ルーティング"
+    },
+    {
+      "id": 19,
+      "front": "プライベートIPアドレス範囲（RFC 1918）は？",
+      "back": "クラスA: 10.0.0.0～10.255.255.255（10.0.0.0/8）、クラスB: 172.16.0.0～172.31.255.255（172.16.0.0/12）、クラスC: 192.168.0.0～192.168.255.255（192.168.0.0/16）。",
+      "category": "IPアドレッシング"
+    },
+    {
+      "id": 20,
+      "front": "ARPとは？何をするのか？",
+      "back": "ARP（Address Resolution Protocol）はIPアドレスをMACアドレスにマッピングします。デバイスがデータを送信する必要がある場合、宛先IPのMACアドレスを見つけるためにARPリクエストをブロードキャストします。",
+      "category": "ネットワークプロトコル"
+    },
+    {
+      "id": 21,
+      "front": "ICMPとは？それを使用する一般的なツールは？",
+      "back": "ICMP（Internet Control Message Protocol）はエラー報告と診断に使用されます。一般的なツール：ping（echoリクエスト/応答）とtraceroute（TTL超過メッセージ）。",
+      "category": "ネットワークプロトコル"
+    },
+    {
+      "id": 22,
+      "front": "TCPの3ウェイハンドシェイクとは？",
+      "back": "1. クライアントがサーバーにSYNを送信。2. サーバーがSYN-ACKで応答。3. クライアントがACKを送信。これによりデータ転送前にTCP接続が確立されます。",
+      "category": "トランスポート層"
+    },
+    {
+      "id": 23,
+      "front": "スイッチのポートセキュリティとは？",
+      "back": "ポートセキュリティはスイッチポートで許可されるMACアドレスの数を制限します。不正なデバイスの接続を防ぎます。違反モード：Protect、Restrict、Shutdown。",
+      "category": "スイッチセキュリティ"
+    },
+    {
+      "id": 24,
+      "front": "トランクポートとアクセスポートの違いは？",
+      "back": "アクセスポート：1つのVLANのトラフィックを運び、エンドデバイスに接続。トランクポート：タグ付け（802.1Q）を使用して複数のVLANのトラフィックを運び、スイッチやルーターに接続。",
+      "category": "スイッチング"
+    },
+    {
+      "id": 25,
+      "front": "DTP（Dynamic Trunking Protocol）とは？",
+      "back": "DTPはCisco独自のプロトコルで、スイッチ間のトランクリンクを自動的にネゴシエートします。モード：auto、desirable、on、nonegotiate。ベストプラクティス：セキュリティのためDTPを無効化。",
+      "category": "スイッチング"
+    },
+    {
+      "id": 26,
+      "front": "VTP（VLAN Trunking Protocol）とは？",
+      "back": "VTPは同じVTPドメイン内のスイッチ間でVLAN設定を伝播します。モード：サーバー（VLAN作成/変更）、クライアント（受信のみ）、トランスペアレント（転送するが同期しない）。",
+      "category": "スイッチング"
+    },
+    {
+      "id": 27,
+      "front": "HSRP、VRRP、GLBPの目的は？",
+      "back": "これらはゲートウェイ冗長性を提供するファーストホップ冗長プロトコル（FHRP）です。HSRP（Cisco）、VRRP（標準）、GLBP（負荷分散）。デフォルトゲートウェイの単一障害点を防ぎます。",
+      "category": "高可用性"
+    },
+    {
+      "id": 28,
+      "front": "EtherChannelとは？プロトコルは？",
+      "back": "EtherChannelは複数の物理リンクを1つの論理リンクにバンドルして帯域幅増加と冗長性を実現します。プロトコル：PAgP（Cisco独自）とLACP（IEEE 802.3ad標準）。",
+      "category": "スイッチング"
+    },
+    {
+      "id": 29,
+      "front": "全二重と半二重の違いは？",
+      "back": "全二重：同時双方向通信、衝突なし、最新のスイッチ。半二重：一度に一方向のみ、CSMA/CDが必要、レガシーハブ。",
+      "category": "イーサネット"
+    },
+    {
+      "id": 30,
+      "front": "CIDR表記とは？例を挙げて説明してください。",
+      "back": "CIDR（Classless Inter-Domain Routing）は/プレフィックスを使用してサブネットマスクを示します。例：192.168.1.0/24はサブネットマスク255.255.255.0（ネットワークに24ビット）を意味します。",
+      "category": "IPアドレッシング"
+    },
+    {
+      "id": 31,
+      "front": "VLSM（Variable Length Subnet Mask）とは？",
+      "back": "VLSMは異なるサブネットに対して異なるサブネットマスクを使用でき、IPアドレスの使用を最適化します。OSPF、EIGRP、RIPv2などのクラスレスルーティングプロトコルが必要です。",
+      "category": "IPアドレッシング"
+    },
+    {
+      "id": 32,
+      "front": "HTTP、HTTPS、FTP、SSH、Telnetのウェルノウンポート番号は？",
+      "back": "HTTP: 80、HTTPS: 443、FTP: 20/21（データ/制御）、SSH: 22、Telnet: 23、SMTP: 25、DNS: 53、DHCP: 67/68。",
+      "category": "プロトコル＆ポート"
+    },
+    {
+      "id": 33,
+      "front": "IPv4とIPv6の違いは？",
+      "back": "IPv4：32ビットアドレス（43億）、ドット10進表記。IPv6：128ビットアドレス（340澗）、16進表記、NAT不要、IPSec組み込み、ブロードキャストなし。",
+      "category": "IPアドレッシング"
+    },
+    {
+      "id": 34,
+      "front": "IPv4とIPv6のループバックアドレスは？",
+      "back": "IPv4: 127.0.0.1（127.0.0.0/8範囲）。IPv6: ::1。ローカルマシン上のTCP/IPスタックのテストに使用されます。",
+      "category": "IPアドレッシング"
+    },
+    {
+      "id": 35,
+      "front": "QoS（Quality of Service）とは？",
+      "back": "QoSはネットワークトラフィックに優先順位を付け、重要なアプリケーションが適切な帯域幅と低遅延を確保できるようにします。メカニズムには分類、マーキング、キューイング、ポリシング/シェーピングが含まれます。",
+      "category": "ネットワーク管理"
+    },
+    {
+      "id": 36,
+      "front": "ACL（Access Control List）とは？2つのタイプは？",
+      "back": "ACLはルールに基づいてネットワークトラフィックをフィルタリングします。標準ACL：送信元IPのみでフィルタ（1-99、1300-1999）。拡張ACL：送信元/宛先IP、プロトコル、ポートでフィルタ（100-199、2000-2699）。",
+      "category": "セキュリティ"
+    },
+    {
+      "id": 37,
+      "front": "NATにおけるinside local、inside global、outside local、outside globalの違いは？",
+      "back": "Inside local: 内部ネットワークのプライベートIP。Inside global: 内部を表すパブリックIP。Outside local: 内部視点からの宛先IP。Outside global: 外部ホストのパブリックIP。",
+      "category": "NAT"
+    },
+    {
+      "id": 38,
+      "front": "IPv6のリンクローカルアドレス範囲は？",
+      "back": "FE80::/10がリンクローカル範囲です。これらのアドレスは自動設定され、ルーティング不可、近隣探索とローカル通信に使用されます。",
+      "category": "IPv6"
+    },
+    {
+      "id": 39,
+      "front": "SNMPの目的は？",
+      "back": "SNMP（Simple Network Management Protocol）はネットワークデバイスを監視・管理します。MIB（Management Information Base）を使用。バージョン：v1、v2c（コミュニティ文字列）、v3（暗号化）。",
+      "category": "ネットワーク管理"
+    },
+    {
+      "id": 40,
+      "front": "Syslogとは？重大度レベルは？",
+      "back": "Syslogはネットワークデバイスからログメッセージを収集・保存します。重大度レベル（0-7）：Emergency、Alert、Critical、Error、Warning、Notice、Informational、Debug。",
+      "category": "ネットワーク管理"
     }
   ]
 }
