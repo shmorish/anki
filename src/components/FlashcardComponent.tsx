@@ -1,17 +1,17 @@
-import { useState } from 'react';
-import type { Flashcard } from '../types/flashcard';
-import './FlashcardComponent.css';
+import { useState } from 'react'
+import type { Flashcard } from '../types/flashcard'
+import './FlashcardComponent.css'
 
 interface FlashcardComponentProps {
-  card: Flashcard;
+  card: Flashcard
 }
 
 export default function FlashcardComponent({ card }: FlashcardComponentProps) {
-  const [isFlipped, setIsFlipped] = useState(false);
+  const [isFlipped, setIsFlipped] = useState(false)
 
   const handleFlip = () => {
-    setIsFlipped(!isFlipped);
-  };
+    setIsFlipped(!isFlipped)
+  }
 
   return (
     <div className="flashcard-container" onClick={handleFlip}>
@@ -32,5 +32,5 @@ export default function FlashcardComponent({ card }: FlashcardComponentProps) {
         </div>
       </div>
     </div>
-  );
+  )
 }

@@ -1,45 +1,45 @@
-import { useState } from 'react';
-import type { Flashcard } from '../types/flashcard';
-import './AddCardForm.css';
+import { useState } from 'react'
+import type { Flashcard } from '../types/flashcard'
+import './AddCardForm.css'
 
 interface AddCardFormProps {
-  onAddCard: (card: Omit<Flashcard, 'id'>) => void;
-  onClose: () => void;
+  onAddCard: (card: Omit<Flashcard, 'id'>) => void
+  onClose: () => void
 }
 
 export default function AddCardForm({ onAddCard, onClose }: AddCardFormProps) {
-  const [front, setFront] = useState('');
-  const [back, setBack] = useState('');
-  const [category, setCategory] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [front, setFront] = useState('')
+  const [back, setBack] = useState('')
+  const [category, setCategory] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (front.trim() && back.trim() && category.trim()) {
-      setIsSubmitting(true);
+      setIsSubmitting(true)
 
       // Create GitHub Issue URL
-      const repoUrl = 'https://github.com/shmorish/anki';
-      const issueUrl = `${repoUrl}/issues/new?template=add-flashcard.yml&title=[CARD]%20${encodeURIComponent(category.trim())}&category=${encodeURIComponent(category.trim())}&front=${encodeURIComponent(front.trim())}&back=${encodeURIComponent(back.trim())}`;
+      const repoUrl = 'https://github.com/shmorish/anki'
+      const issueUrl = `${repoUrl}/issues/new?template=add-flashcard.yml&title=[CARD]%20${encodeURIComponent(category.trim())}&category=${encodeURIComponent(category.trim())}&front=${encodeURIComponent(front.trim())}&back=${encodeURIComponent(back.trim())}`
 
       // Open GitHub Issue in new tab
-      window.open(issueUrl, '_blank');
+      window.open(issueUrl, '_blank')
 
       // Also add locally for immediate feedback
       onAddCard({
         front: front.trim(),
         back: back.trim(),
-        category: category.trim()
-      });
+        category: category.trim(),
+      })
 
-      setFront('');
-      setBack('');
-      setCategory('');
-      setIsSubmitting(false);
-      onClose();
+      setFront('')
+      setBack('')
+      setCategory('')
+      setIsSubmitting(false)
+      onClose()
     }
-  };
+  }
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -93,5 +93,5 @@ export default function AddCardForm({ onAddCard, onClose }: AddCardFormProps) {
         </form>
       </div>
     </div>
-  );
+  )
 }
