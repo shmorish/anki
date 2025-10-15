@@ -1,5 +1,5 @@
+import { Box, Button, Container, Flex, Heading, Stack, Text } from '@chakra-ui/react'
 import { useMemo, useState } from 'react'
-import { Box, Button, Container, Flex, Heading, Text, Stack } from '@chakra-ui/react'
 import AddCardForm from './components/AddCardForm'
 import CardNavigation from './components/CardNavigation'
 import FlashcardComponent from './components/FlashcardComponent'
@@ -109,14 +109,7 @@ function App() {
           </Flex>
         </Box>
 
-        <Flex
-          as="main"
-          flex={1}
-          direction="column"
-          justify="center"
-          align="center"
-          w="full"
-        >
+        <Flex as="main" flex={1} direction="column" justify="center" align="center" w="full">
           {displayedCards.length > 0 ? (
             <>
               <FlashcardComponent card={displayedCards[currentCardIndex]} />

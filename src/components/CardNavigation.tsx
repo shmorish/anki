@@ -1,5 +1,5 @@
+import { Button, Flex, HStack, Stack, Text } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
-import { Button, Checkbox, Flex, HStack, Text, Stack } from '@chakra-ui/react'
 
 interface CardNavigationProps {
   currentIndex: number
@@ -121,7 +121,7 @@ export default function CardNavigation({
                 width: '20px',
                 height: '20px',
                 cursor: 'pointer',
-                accentColor: 'var(--chakra-colors-purple-500)'
+                accentColor: 'var(--chakra-colors-purple-500)',
               }}
             />
             <Text fontWeight="500">チェック</Text>

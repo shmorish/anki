@@ -1,15 +1,5 @@
+import { Box, Button, Dialog, Field, Flex, Heading, Input, Stack, Textarea } from '@chakra-ui/react'
 import { useId, useState } from 'react'
-import {
-  Box,
-  Button,
-  Flex,
-  Field,
-  Heading,
-  Input,
-  Dialog,
-  Textarea,
-  Stack,
-} from '@chakra-ui/react'
 import type { Flashcard } from '../types/flashcard'
 
 interface AddCardFormProps {

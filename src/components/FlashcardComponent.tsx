@@ -1,5 +1,5 @@
+import { Badge, Box, Stack, Text } from '@chakra-ui/react'
 import { useState } from 'react'
-import { Badge, Box, Text, Stack } from '@chakra-ui/react'
 import type { Flashcard } from '../types/flashcard'
 
 interface FlashcardComponentProps {
