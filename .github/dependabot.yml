@@ -11,6 +11,11 @@ updates:
     commit-message:
       prefix: "chore"
       include: "scope"
+    groups:
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
 
   # Enable version updates for GitHub Actions
   - package-ecosystem: "github-actions"
@@ -22,3 +27,8 @@ updates:
       - "github-actions"
     commit-message:
       prefix: "ci"
+    groups:
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
